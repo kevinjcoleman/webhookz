@@ -1,0 +1,29 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+.main-container {
+	margin-top: 50px;
+}
+
+.center {
+	text-align: center;
+}
+
+.no-margin {
+	margin: 0 0 0 0;
+}
+
+.no-padding {
+	padding: 0 0 0 0;
+}
+
+.big-button {
+	width: 100%;
+    margin-top: 10px;
+}
+
+.header-button {
+	margin-right: 3px;
+	margin-left: 3px;
+}

@@ -1,22 +1,38 @@
 class Nation < ActiveRecord::Base
-  attr_accessor :nation_token
+  attr_accessor :decrypted_api, :client
+  before_create :api_encrypt
   belongs_to :user
 
-  # Returns the hash digest of the given string.
-  def Nation.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
-    BCrypt::Password.create(string, cost: cost)
+  def api_encrypt
+    API_ENCRYPTION.each do |key, value|
+      while(self.api_key.include?(key))
+        self.api_key.sub!(key, value)
+      end
+    end
+    self.api_key = api_key.reverse.downcase
   end
 
-  # Returns a random token.
-  def Nation.new_token
-    SecureRandom.urlsafe_base64
+  def initialize_client
+    decrypt
+    @client = NationBuilder::Client.new(nation_slug, decrypted_api)
   end
 
-  # Remembers a user in the database for use in persistent sessions.
-  def api_remember
-    self.nation_token = Nation.new_token
-    update_attribute(:api_key, Nation.digest(nation_token))
+  def decrypt
+    api_decrypt(self.api_key)
+  end
+
+  def api_decrypt(api_key)
+    decrypted_key = api_key
+    API_ENCRYPTION.each do |key, value|
+      if decrypted_key.include?(value)
+        decrypted_key = decrypted_key.gsub(value, key)
+      end
+    end
+    @decrypted_api = decrypted_key.reverse
+  end
+
+  def update_webhooks_count(count)
+    self.webhooks_count = count
+    self.save
   end
 end

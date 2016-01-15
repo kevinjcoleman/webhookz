@@ -1,0 +1,28 @@
+<h1><%= @nation.nation_slug %></h1>
+<% if @webhooks %>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h4 class="center">You have <%= @webhooks.count %> Webhooks</h4></div>
+	<!-- Table -->
+	<table class="table">
+		<thead>
+      		<tr>
+        		<th>Version</th>
+        		<th>Url</th>
+        		<th>Event</th>
+      		</tr>
+   		</thead>
+   		<tbody>
+		<% @webhooks.each do |webhook| %>
+			<tr>
+		        <td><%= webhook["version"] %></td>
+		        <td><%= webhook["url"] %>/td>
+		        <td><%= webhook["event"] %></td>
+	      	</tr>
+	     <% end %>
+	    </tbody>
+	</table>
+</div>
+<% else %>
+<h3>There are currently no webhooks for this nation.</h3>
+<% end %>

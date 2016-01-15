@@ -11,14 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160114031237) do
+ActiveRecord::Schema.define(version: 20160115032913) do
 
   create_table "nations", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "nation_slug"
     t.string   "api_key"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "webhooks_count"
   end
 
   add_index "nations", ["user_id"], name: "index_nations_on_user_id"

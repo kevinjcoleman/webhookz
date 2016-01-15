@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-
-  resources 'nations'
-
-  devise_for :users do
-    
+  devise_for :users
+  resources :users, only: [:update, :show] do
+    resources :nations
   end
+
+  
 
 
   # The priority is based upon order of creation: first created -> highest priority.
