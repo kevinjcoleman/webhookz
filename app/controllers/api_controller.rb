@@ -11,7 +11,7 @@ class ApiController < ApplicationController
 		person = {
 				id: results,
 				note: {
-				content: "I made this with webhooks....WUTTTT"
+				content: "I made this with webhooks....WUTTTTTTTTTTTTTT"
 					}
 				}
 		client = NationBuilder::Client.new(NATION_SLUG, API_KEY)
