@@ -1,6 +1,7 @@
 class Nation < ActiveRecord::Base
   attr_accessor :decrypted_api, :client
   before_create :api_encrypt
+  before_save :validate_api
   belongs_to :user
 
   def api_encrypt
@@ -31,8 +32,16 @@ class Nation < ActiveRecord::Base
     @decrypted_api = decrypted_key.reverse
   end
 
-  def update_webhooks_count(count)
-    self.webhooks_count = count
-    self.save
+  def update_webhooks_count
+    self.webhooks_count = client.call(:webhooks, :index)["results"].count
+  end
+
+  def validate_api
+    begin
+      initialize_client
+      update_webhooks_count
+    rescue
+      self.valid_api = false
+    end
   end
 end

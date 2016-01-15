@@ -27,3 +27,11 @@
 	margin-right: 3px;
 	margin-left: 3px;
 }
+
+.api-uninitialized {
+	background-color: #EFAEAE;
+}
+
+.api-uninitialized:hover {
+	background-color: red !important;
+}

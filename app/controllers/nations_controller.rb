@@ -17,10 +17,15 @@ class NationsController < ApplicationController
   end
 
   def show
-    @nation = Nation.find(params[:id])
-    @nation.initialize_client
-    @webhooks = @nation.client.call(:webhooks, :index)["results"]
-    @webhooks_count = @webhooks.count
-    @nation.update_webhooks_count(@webhooks_count)
+    begin
+      @user = User.find(params[:user_id])
+      @nation = Nation.find(params[:id])
+      @nation.initialize_client
+      @webhooks = @nation.client.call(:webhooks, :index)["results"]
+      @nation.save
+    rescue
+      flash[:danger] = "That nation's api isn't working, FIX IT!"
+      redirect_to user_path(@user)
+    end
   end
 end

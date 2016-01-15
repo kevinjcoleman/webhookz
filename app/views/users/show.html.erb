@@ -2,9 +2,9 @@
 <% if @nations %>
 	<ul class="list-group">
 		<% @nations.each do |nation| %>
-		  <a href="<%= user_nation_path(@user, nation)%>" class="list-group-item">
-		    <span class="badge" style="vertical-align: center"><%= nation.webhooks_count %></span>
-		    <p class="center no-margin"><strong><%= nation.nation_slug %></strong></p>
+		  <a href="<%= user_nation_path(@user, nation)%>" class="list-group-item <%= unitialized_api_style(nation) %>">
+		    <span class="badge" style="vertical-align: center"><%= webhooks_count(nation) %></span>
+		    <p class="center no-margin"><strong><%= nation.nation_slug %></strong></p> <%= unitialized_api_message(nation)%>
 		  </a>
 		<% end %>
 	</ul>
