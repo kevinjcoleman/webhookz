@@ -16,3 +16,4 @@
 !/log/.keep
 /tmp
 /config/initializers/encryption_hash.rb
+/config/initializers/api_initializer_key.rb
