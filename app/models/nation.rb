@@ -18,7 +18,6 @@ class Nation < ActiveRecord::Base
 
   def initialize_client
     decrypt
-
     @client = NationBuilder::Client.new(nation_slug, decrypted_api)
   end
 
