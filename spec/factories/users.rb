@@ -1,10 +1,15 @@
 require 'faker'
 
 FactoryGirl.define do
-  factory :user do |f|
-    f.email { Faker::Internet.email }
-    f.password { Faker::Internet.password }
-  end
+	factory :user do
+	    email { Faker::Internet.email }
+	    password { Faker::Internet.password }
+
+	    trait :other_user do
+		    email { Faker::Internet.email }
+		    password { Faker::Internet.password }
+		end
+	end
 
   factory :nation do
     nation_slug 'mynation'
