@@ -18,6 +18,4 @@ class ApiController < ApplicationController
 		client.call(:people, :private_note_create, person)
 		render :text => results
 	end
-
-
 end

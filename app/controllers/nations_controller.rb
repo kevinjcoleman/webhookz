@@ -1,5 +1,6 @@
 class NationsController < ApplicationController
   before_action :authenticate_user!
+  before_action :redirect_if_not_current_user
 
   def new
   end
@@ -16,6 +17,9 @@ class NationsController < ApplicationController
   def destroy
   end
 
+  def edit
+  end
+
   def show
     begin
       @user = User.find(params[:user_id])
@@ -28,4 +32,13 @@ class NationsController < ApplicationController
       redirect_to user_path(@user)
     end
   end
+
+  private
+    def redirect_if_not_current_user
+      @user = User.find(params[:user_id])
+        unless @user == current_user
+          flash[:danger] = "You can't access that page."
+          redirect_to user_path(current_user)
+        end
+    end
 end

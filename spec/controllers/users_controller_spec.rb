@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
 	login_user
+	
 	describe "GET #show" do
 
 		it 'redirects if accessing other users page' do
