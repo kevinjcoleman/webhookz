@@ -3,6 +3,9 @@ class Nation < ActiveRecord::Base
   before_create :api_encrypt
   before_save :validate_api
   belongs_to :user
+  validates :user, presence: true
+  validates :api_key, presence: true, length: { minimum: 64, too_short: "%{count} characters is too short for a NationBuilder API Token." }
+  validates :nation_slug, presence: true
 
   def api_encrypt
     API_ENCRYPTION.each do |key, value|
@@ -10,11 +13,12 @@ class Nation < ActiveRecord::Base
         self.api_key.sub!(key, value)
       end
     end
-    self.api_key = api_key.reverse.downcase
+    self.api_key = api_key.downcase
   end
 
   def initialize_client
     decrypt
+
     @client = NationBuilder::Client.new(nation_slug, decrypted_api)
   end
 
@@ -29,7 +33,7 @@ class Nation < ActiveRecord::Base
         decrypted_key = decrypted_key.gsub(value, key)
       end
     end
-    @decrypted_api = decrypted_key.reverse
+    @decrypted_api = decrypted_key
   end
 
   def update_webhooks_count
@@ -39,9 +43,16 @@ class Nation < ActiveRecord::Base
   def validate_api
     begin
       initialize_client
-      update_webhooks_count
+      if @client
+        update_webhooks_count
+        self.valid_api = true
+      else
+        self.valid_api = false
+      end
     rescue
       self.valid_api = false
+      return true
     end
   end
+
 end
