@@ -1,19 +1,18 @@
 <h1>Nations</h1>
-<% if @nations %>
-	<ul class="list-group">
-		<% @nations.each do |nation| %>
-		  <a href="<%= user_nation_path(@user, nation)%>" class="list-group-item <%= unitialized_api_style(nation) %>">
-		    <span class="badge" style="vertical-align: center"><%= webhooks_count(nation) %></span>
-		    <p class="center no-margin"><strong><%= nation.nation_slug %></strong></p> <%= unitialized_api_message(nation)%>
-		  </a>
-		<% end %>
+<% if @nations.any? %>
+	<ul class="list-group" id="nations">
+		<%= render @nations %>
 	</ul>
 	<div class="btn-group btn-group-justified" role="group">
-		<%= link_to "Add another nation", new_user_nation_path(@user), class: "btn btn-primary" %>
+		<%= link_to "Add another nation", new_user_nation_path(@user), class: "btn btn-primary", id: "nation-button", remote: true %>
 	</div>
 <% else %>
 	<p>No current nations</p>
 	<div class="btn-group btn-group-justified" role="group">
-		<%= link_to "Create a nation", new_user_nation_path(@user), class: "btn btn-primary" %>
+		<%= link_to "Create a nation", new_user_nation_path(@user), class: "btn btn-primary", id: "nation-button", remote: true %>
 	</div>
 <% end %>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2" id="nation-form" style="display:none;"></div>
+</div>

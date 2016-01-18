@@ -1,0 +1,12 @@
+<%= simple_form_for(@user, :url => user_nations_path(@user), :method => :post, html: { class: 'form-horizontal', remote: true, }) do |f| %>
+<%= f.simple_fields_for :nations do |n| %>
+  <%= n.input :nation_slug %>
+  <%= n.input :api_key %>
+  <div class="btn-group btn-group-justified" role="group">
+  	<div class="btn-group" role="group">
+ <%= n.button :submit, @submit_title, class: "btn btn-success", remote: true %>
+ </div>
+ <%= link_to "Cancel", nation_cancel_path, class: "btn btn-danger", role: "button", remote: true %>
+	</div>
+  <% end %>
+<% end %>

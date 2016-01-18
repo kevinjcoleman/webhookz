@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :nations
   end
 
-  
+  get '/users/nations/cancel', to: 'nations#cancel', as: "nation_cancel"
 
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -13,6 +13,8 @@ gem 'sdoc',         '0.4.0', group: :doc
 gem 'nationbuilder-rb', require: 'nationbuilder'
 gem 'bootstrap-sass'
 gem 'pry'
+gem 'simple_form'
+
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

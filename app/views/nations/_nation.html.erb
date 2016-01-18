@@ -1,0 +1,20 @@
+<li class="list-group-item <%= unitialized_api_style(nation) %>">
+		    <div class="row">
+		    	<strong class="text-left col-md-6"><%= nation.nation_slug %>   
+					<%= link_to edit_user_nation_path(@user, nation), remote: true do %>
+					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+					<% end %>
+		    		<%= link_to user_nation_path(@user, nation), remote: true, method: :delete,  data: { confirm: 'Are you sure?' } do %>
+		    			<span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: red;"></span>
+		    		<% end %>
+		    	</strong>
+		    	<span class="pull-right" style="text-align: right; margin-right: 5px;">
+		    		<a href="<%= user_nation_path(@user, nation)%>"><em>Webhooks  </em></a>
+		    		<span class="badge" style="vertical-align: center"><%= webhooks_count(nation) %></span>
+		    	</span>
+		    </div>
+	
+		     <%= unitialized_api_message(nation)%>
+		     
+</li>
+<div class="col-md-8 col-md-offset-2" id="nation-edit-form-<%= nation.id %>" style="display:none;"></div>
