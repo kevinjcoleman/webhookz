@@ -1,3 +1,8 @@
-$('#nations').html("<%= j (render @nations) %>");
-$('#nation-form').hide(350);
-$('#nation-button').show(350);
+<% if @result %>
+	$("#notice").html('<%= j render partial: "shared/messages" %>');
+  	$('#nations').html("<%= j (render @nations) %>");
+	$('#nation-form').hide(350);
+	$('#nation-button').show(350);
+<% else %>
+  	$('#nation-form').html("<%= j (render 'form') %>");
+<% end %>

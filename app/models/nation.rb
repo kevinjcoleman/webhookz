@@ -4,8 +4,8 @@ class Nation < ActiveRecord::Base
   before_save :validate_api
   belongs_to :user
   validates :user, presence: true
-  validates :api_key, presence: true, length: { minimum: 64, too_short: "%{count} characters is too short for a NationBuilder API Token." }
-  validates :nation_slug, presence: true
+  validates :api_key, :presence => { :message => "You need an API Token to access NationBuilder's API." }, length: { minimum: 64, too_short: "Your token is too short." }
+  validates :nation_slug, :presence => { :message => "You must have a nation slug to access NationBuilder's API." }
 
   def api_encrypt
     API_ENCRYPTION.each do |key, value|

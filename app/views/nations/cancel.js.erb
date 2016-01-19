@@ -1,2 +1,5 @@
 $('#nation-form').hide(350);
 $('#nation-button').show(350);
+<% @user.nations.each do |nation| %>
+	$('#nation-edit-form-<%= nation.id %>').hide(350);
+<% end %>

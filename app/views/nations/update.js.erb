@@ -1,0 +1,6 @@
+<% if @result %>
+	$("#notice").html('<%= j render partial: "shared/messages" %>');
+	$('#nations').html("<%= j (render @nations) %>");
+<% else %>
+	$('#embedded-nation-form-<%= @nation.id %>').html("<%= j (render 'edit_form') %>");
+<% end %>

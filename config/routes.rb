@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
+  get '/users/:user_id/nations/cancel', to: 'nations#cancel', as: "nation_cancel"
   resources :users, only: [:update, :show] do
     resources :nations
   end
 
-  get '/users/nations/cancel', to: 'nations#cancel', as: "nation_cancel"
+  
 
 
   # The priority is based upon order of creation: first created -> highest priority.

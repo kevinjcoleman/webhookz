@@ -1,18 +1,21 @@
+<div id="notice"></div>
 <h1>Nations</h1>
 <% if @nations.any? %>
-	<ul class="list-group" id="nations">
+	<div id="nations">
 		<%= render @nations %>
-	</ul>
+	</div>
 	<div class="btn-group btn-group-justified" role="group">
 		<%= link_to "Add another nation", new_user_nation_path(@user), class: "btn btn-primary", id: "nation-button", remote: true %>
 	</div>
 <% else %>
-	<p>No current nations</p>
+	<div id="nations">
+		<p>No current nations</p>
+	</div>
 	<div class="btn-group btn-group-justified" role="group">
 		<%= link_to "Create a nation", new_user_nation_path(@user), class: "btn btn-primary", id: "nation-button", remote: true %>
 	</div>
 <% end %>
 
 <div class="row">
-  <div class="col-md-8 col-md-offset-2" id="nation-form" style="display:none;"></div>
+  <div class="col-md-8 col-md-offset-2" id="nation-form" style="display:none; margin-bottom: 20px;"></div>
 </div>

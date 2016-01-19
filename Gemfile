@@ -14,6 +14,7 @@ gem 'nationbuilder-rb', require: 'nationbuilder'
 gem 'bootstrap-sass'
 gem 'pry'
 gem 'simple_form'
+gem 'selenium-webdriver'
 
 
 group :development, :test do

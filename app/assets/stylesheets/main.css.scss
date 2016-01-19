@@ -32,9 +32,6 @@
 	background-color: #EFAEAE;
 }
 
-.api-uninitialized:hover {
-	background-color: red !important;
-}
 
 /*flash*/
 
@@ -69,11 +66,15 @@
 
  /*Forms*/
 
- #nation-form {
+#nation-form {
     padding-left: 30px;
     padding-right: 30px;
 }
 
 .my-button {
     width: 100% !important;
+}
+
+.embedded-nation-form {
+    margin: 10px;
 }

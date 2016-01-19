@@ -1,10 +1,10 @@
-<%= simple_form_for(@user, :url => user_nations_path(@user), :method => :post, html: { class: 'form-horizontal', remote: true, }, :defaults => {:required => false}) do |f| %>
+<%= simple_form_for(@user, :url => user_nation_path(@user, @nation), :method => :patch, html: { class: 'form-horizontal', remote: true, }, :defaults => {:required => false}) do |f| %>
 <%= f.simple_fields_for @nation do |n| %>
   <%= n.input :nation_slug %>
   <%= n.input :api_key, hint: 'Must be 64 characters.' %>
   <div class="btn-group btn-group-justified" role="group">
   	<div class="btn-group" role="group">
- <%= n.button :submit, @submit_title, class: "btn btn-success", remote: true %>
+ <%= n.button :submit, @submit_title, class: "btn btn-warning", remote: true %>
  </div>
  <%= link_to "Cancel", nation_cancel_path, class: "btn btn-danger", role: "button", remote: true %>
 	</div>

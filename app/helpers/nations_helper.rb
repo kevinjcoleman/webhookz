@@ -19,7 +19,7 @@ module NationsHelper
 		if nation.valid_api == true
 			nil
 		else
-			'<p class="center"><em>Looks like this nation\'s API is having issues, please check your nation slug and api credentials.</em></p>'.html_safe
+			'<span class="center"><em>Looks like this nation\'s API is having issues, please check your nation slug and api credentials.</em></span>'.html_safe
 		end
 	end
 

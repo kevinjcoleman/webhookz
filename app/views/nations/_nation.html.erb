@@ -1,20 +1,22 @@
-<li class="list-group-item <%= unitialized_api_style(nation) %>">
-		    <div class="row">
-		    	<strong class="text-left col-md-6"><%= nation.nation_slug %>   
-					<%= link_to edit_user_nation_path(@user, nation), remote: true do %>
-					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-					<% end %>
-		    		<%= link_to user_nation_path(@user, nation), remote: true, method: :delete,  data: { confirm: 'Are you sure?' } do %>
+<div class="panel panel-default <%= unitialized_api_style(nation) %>">
+		    <div class="panel-body">
+		    	<strong class="text-left col-md-4"><%= nation.nation_slug %>   
+					<%= link_to edit_user_nation_path(@user, nation), id: "edit#{nation.id}", remote: true do %><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color: #00FF00;" id="edit-<%= nation.id %>"></span><% end %>
+		    		<%= link_to user_nation_path(@user, nation), id: "delete#{nation.id}", remote: true, method: :delete,  data: { confirm: 'Are you sure?' } do %>
 		    			<span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: red;"></span>
 		    		<% end %>
 		    	</strong>
 		    	<span class="pull-right" style="text-align: right; margin-right: 5px;">
-		    		<a href="<%= user_nation_path(@user, nation)%>"><em>Webhooks  </em></a>
+		    		<a href="<%= user_nation_path(@user, nation)%>"><em>Webhooks</em></a><span>  </span>
 		    		<span class="badge" style="vertical-align: center"><%= webhooks_count(nation) %></span>
 		    	</span>
+		    	<div class="col-md-4">
+		    		<%= unitialized_api_message(nation)%>
+		    	</div>
 		    </div>
-	
-		     <%= unitialized_api_message(nation)%>
-		     
-</li>
-<div class="col-md-8 col-md-offset-2" id="nation-edit-form-<%= nation.id %>" style="display:none;"></div>
+		     	<div class="panel-footer" id="nation-edit-form-<%= nation.id %>" style="display:none;">
+		     		<h3 class="center no-margin">Edit</h3>
+		     		<div class="embedded-nation-form" id="embedded-nation-form-<%= nation.id %>">
+		     		</div>
+		     	</div>
+</div>
