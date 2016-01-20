@@ -1,11 +1,12 @@
 class Nation < ActiveRecord::Base
   attr_accessor :decrypted_api, :client
   before_create :api_encrypt
-  before_save :validate_api
+  before_save :update
   belongs_to :user
   validates :user, presence: true
   validates :api_key, :presence => { :message => "You need an API Token to access NationBuilder's API." }, length: { minimum: 64, too_short: "Your token is too short." }
   validates :nation_slug, :presence => { :message => "You must have a nation slug to access NationBuilder's API." }
+  has_many :webhooks
 
   def api_encrypt
     API_ENCRYPTION.each do |key, value|
@@ -36,7 +37,7 @@ class Nation < ActiveRecord::Base
   end
 
   def update_webhooks_count
-    self.webhooks_count = client.call(:webhooks, :index)["results"].count
+    self.webhooks_count = webhooks.active.count
   end
 
   def validate_api
@@ -51,6 +52,26 @@ class Nation < ActiveRecord::Base
     rescue
       self.valid_api = false
       return true
+    end
+  end
+
+  def update
+    begin
+      initialize_client
+      webhooks = @client.call(:webhooks, :index)["results"]
+      ids = []
+      webhooks.each {|id| ids << id["id"]}
+      webhooks.each do |w|
+        next if self.webhooks.active.find_by(external_id: w["id"])
+        self.webhooks.create(event: w["event"], external_id: w["id"], link: w["url"])
+      end
+      inactive_webhooks = self.webhooks.active.where.not(external_id:  ids)
+      inactive_webhooks.each {|d| d.update_attributes(active: false) }
+      self.valid_api = true
+      update_webhooks_count
+      rescue
+        self.valid_api = false
+        return true
     end
   end
 
