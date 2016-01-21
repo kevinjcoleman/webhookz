@@ -5,4 +5,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :nations
+
+  def load_nations
+  	self.nations.each do |nation|
+  		nation.update_if_not_updated_recently
+  	end
+  end
 end

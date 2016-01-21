@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
-  	@nations = @user.nations
+  	@nations = @user.nations.each {|d| d.save }
   end
 
   private

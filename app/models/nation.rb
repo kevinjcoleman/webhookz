@@ -1,7 +1,8 @@
 class Nation < ActiveRecord::Base
   attr_accessor :decrypted_api, :client
   before_create :api_encrypt
-  before_save :update
+  #after_save :update_if_not_updated_recently
+  #before_save :update_if_not_updated_recently, :on => :update
   belongs_to :user
   validates :user, presence: true
   validates :api_key, :presence => { :message => "You need an API Token to access NationBuilder's API." }, length: { minimum: 64, too_short: "Your token is too short." }
@@ -38,6 +39,7 @@ class Nation < ActiveRecord::Base
 
   def update_webhooks_count
     self.webhooks_count = webhooks.active.count
+    self.updated_at = Time.now
   end
 
   def validate_api
@@ -59,6 +61,7 @@ class Nation < ActiveRecord::Base
     begin
       initialize_client
       webhooks = @client.call(:webhooks, :index)["results"]
+ 
       ids = []
       webhooks.each {|id| ids << id["id"]}
       webhooks.each do |w|
@@ -73,6 +76,22 @@ class Nation < ActiveRecord::Base
         self.valid_api = false
         return true
     end
+    self.save
   end
 
+  def updated_recently?
+    if updated_at < 6.hours.ago
+      true
+    else
+      false
+    end
+  end
+
+  def update_if_not_updated_recently
+    if self.updated_at.nil?
+      update
+    elsif self.updated_recently?
+      update
+    end
+  end
 end

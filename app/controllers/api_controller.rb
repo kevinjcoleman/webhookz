@@ -2,8 +2,7 @@ class ApiController < ApplicationController
 	protect_from_forgery :except => :update
 
 	def index
-		client = NationBuilder::Client.new(NATION_SLUG, API_KEY)
-		@client = client.call(:webhooks, :index)
+
 	end
 
 	def update

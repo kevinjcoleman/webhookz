@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
+  get 'webhook/create'
+
   devise_for :users
   get '/users/:user_id/nations/cancel', to: 'nations#cancel', as: "nation_cancel"
   resources :users, only: [:update, :show] do
-    resources :nations
+    resources :nations do
+          resources :webhooks
+    end
   end
 
   

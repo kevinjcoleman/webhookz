@@ -1,0 +1,10 @@
+	person_created person_changed	person_contacted person_destroyed	person_merged	people_destroyed donation_succeeded donation_changed donation_canceled
+
+<%= simple_form_for(@user, :url => new_user_nation_webhook(@user, @nation), :method => :create, html: { class: 'form-horizontal', remote: true, }, :defaults => {:required => false}) do |f| %>
+	<%= f.simple_fields_for @nation do |n| %>
+		<%= f.simple_fields_for @webhook do |e| %>
+		  <%= e.input :event, collection: %w(person_created person_changed	person_contacted person_destroyed	person_merged	people_destroyed donation_succeeded donation_changed donation_canceled) %>
+		 <%= n.button :submit, "Create webhook", class: "btn btn-success", remote: true %>
+		 <% end %>	
+  <% end %>
+<% end %>
