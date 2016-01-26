@@ -8,16 +8,18 @@
 		    	</strong>
 		    	<span class="pull-right" style="text-align: right; margin-right: 5px;">
 		    		<div class="btn-group">
-  						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Webhooks <span class="badge" style="vertical-align: center"><%= webhooks_count(nation) %></span> <span class="caret"></span>
+  						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Webhooks <span class="badge" style="vertical-align: center"><%= nation.webhooks.active.count %></span> <span class="caret"></span>
   						</button>
 						  <ul class="dropdown-menu">
 						    <% if nation.webhooks.any? %>
-						    	<% nation.webhooks.each do |webhook| %>
-							    <li><a href="#"><%= webhook.event %></a></li>
+						    	<% nation.webhooks.active.each do |webhook| %>
+							    <li><a href="#"><%= webhook.normalized_event %></a></li>
 							    <% end %>
 							    <li role="separator" class="divider"></li>
 							<% end %>
-							    <li><a href="#">Create webhook <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></li>
+									<li>
+										<%= link_to new_user_nation_webhook_path(@user, nation), id: "nation-new-webhook-#{nation.id}", remote: true do %> Create webhook <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><% end %> 
+									</li>
 						  </ul>
 						</div>
 		    	</span>
@@ -31,7 +33,7 @@
 		     		</div>
 		     	</div>
 
-		     	<div class="panel-footer" id="webhook-create-form-<%= nation.id %>" style="display:none;">
+		     	<div class="panel-footer" id="webhook-create-<%= nation.id %>" style="display:none;">
 		     		<h3 class="center no-margin">Create a webhook</h3>
 		     		<div class="embedded-nation-form" id="webhook-create-form-<%= nation.id %>">
 		     		</div>

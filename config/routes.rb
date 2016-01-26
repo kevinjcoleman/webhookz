@@ -5,11 +5,9 @@ Rails.application.routes.draw do
   get '/users/:user_id/nations/cancel', to: 'nations#cancel', as: "nation_cancel"
   resources :users, only: [:update, :show] do
     resources :nations do
-          resources :webhooks
+          resources :webhook
     end
   end
-
-  
 
 
   # The priority is based upon order of creation: first created -> highest priority.

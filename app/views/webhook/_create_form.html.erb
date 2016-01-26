@@ -1,0 +1,8 @@
+<%= simple_form_for(@user, :url => user_nation_webhook_index_path(@user, @nation), :method => :create, html: { class: 'form-horizontal', remote: true, }, :defaults => {:required => false}) do |f| %>
+	<%= f.simple_fields_for @nation do |n| %>
+		<%= f.simple_fields_for @webhook do |e| %>
+		  <%= e.input :event, collection: ["When a person is created.", "When a person is changed.", "When a person is contacted.", "When a person is destroyed.",  "When a person is merged.",	"When people are destroyed.", "When a person successfully donates.", "When a donation is changed.", "When a donation is canceled."] %>
+		 <%= n.button :submit, "Create webhook", class: "btn btn-success", remote: true %>
+		 <% end %>	
+  <% end %>
+<% end %>

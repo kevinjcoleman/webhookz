@@ -35,6 +35,8 @@ describe Nation do
 	end
 	it "api_valid is false if api_key is invalid" do
 		invalid_api = FactoryGirl.create(:nation, user: @user, api_key: "1af0f13fddf7f06c47be787fa6c909ed9782686ed763d63506b9b037bfd83887")
+		invalid_api.update
+		invalid_api.save
 		expect(invalid_api.valid_api).to eq(false)
 	end
 

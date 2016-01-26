@@ -8,6 +8,7 @@ class Nation < ActiveRecord::Base
   validates :api_key, :presence => { :message => "You need an API Token to access NationBuilder's API." }, length: { minimum: 64, too_short: "Your token is too short." }
   validates :nation_slug, :presence => { :message => "You must have a nation slug to access NationBuilder's API." }
   has_many :webhooks
+  validates_uniqueness_of :nation_slug, :scope => :user_id, :message => 'You already have a nation with that slug.'
 
   def api_encrypt
     API_ENCRYPTION.each do |key, value|
@@ -61,7 +62,6 @@ class Nation < ActiveRecord::Base
     begin
       initialize_client
       webhooks = @client.call(:webhooks, :index)["results"]
- 
       ids = []
       webhooks.each {|id| ids << id["id"]}
       webhooks.each do |w|
@@ -94,4 +94,19 @@ class Nation < ActiveRecord::Base
       update
     end
   end
+
+  def webhook_create(webhook_params)
+    @webhook = self.webhooks.create(event: webhook_params)
+    initialize_client
+    webhook = {
+      webhook: {
+        version: 4,
+        url: "https://murmuring-tundra-2773.herokuapp.com/users/#{self.user.id}/nations/#{self.id}/webhook/#{ @webhook.id }/post",
+        event: @webhook.event
+      }
+    }
+    result = @client.call(:webhooks, :create, webhook)
+    @webhook.update_attributes(external_id: result["webhook"]["id"], link: result["webhook"]["url"])
+  end
+
 end

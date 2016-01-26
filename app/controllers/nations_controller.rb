@@ -2,7 +2,6 @@ class NationsController < ApplicationController
   before_action :authenticate_user!, except: [:cancel]
   before_action :redirect_if_not_current_user, except: [:cancel]
   before_action :find_nation, only: [:show, :update, :destroy, :edit]
-  before_action :all_nations, only: [:create, :destroy, :update]
   before_action :user_find, only: [:cancel]
   respond_to :html, :js
 
@@ -19,12 +18,14 @@ class NationsController < ApplicationController
   end
 
   def create
-    @nation = Nation.create(nation_slug: nation_params[:nation_slug], api_key: nation_params[:api_key], user: @user)
-    @nation.update
-    @nation.reload
-    if @nation.id != nil
-      @result = true
+    @nation = Nation.new(nation_slug: nation_params[:nation_slug], api_key: nation_params[:api_key], user: @user)
+    @result = @nation.save
+    if @result
+      @nation.update
+      @nation.save
+      @nation.reload
     end
+    all_nations
     respond_to do |format|
       if @result
         format.js { flash.now[:notice] = "<strong>#{@nation.nation_slug}</strong> was created!" }
@@ -38,6 +39,10 @@ class NationsController < ApplicationController
 
   def update
     @result = @nation.update_attributes(nation_slug: nation_params[:nation_slug], api_key: nation_params[:api_key])
+    @nation.update
+    @nation.save
+    @nation.reload
+    all_nations
     respond_to do |format|
       if @result
         format.js { flash.now[:notice] = "<strong>#{@nation.nation_slug}</strong> was succesfully saved!" }
@@ -51,6 +56,7 @@ class NationsController < ApplicationController
 
   def destroy
     @result = @nation.destroy
+    all_nations
     respond_to do |format|
       if @result
           format.js { flash.now[:danger] = "<strong>#{@nation.nation_slug}</strong> was deleted!" }
@@ -107,7 +113,11 @@ class NationsController < ApplicationController
     end
 
     def all_nations
-      @nations = @user.nations.each{|n| n.update_if_not_updated_recently }
+      @nations = @user.nations.each do |n|
+        n.update_if_not_updated_recently
+        n.save
+        n.reload
+      end
     end
 
     def user_find
