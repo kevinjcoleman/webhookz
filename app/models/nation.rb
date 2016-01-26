@@ -64,7 +64,6 @@ class Nation < ActiveRecord::Base
       webhooks = @client.call(:webhooks, :index)["results"]
       ids = []
       webhooks.each {|id| ids << id["id"]}
-      binding.pry
       webhooks.each do |w|
         next if self.webhooks.active.find_by(external_id: w["id"])
         self.webhooks.create(event: WEBHOOK_HASH.invert[w["event"]], external_id: w["id"], link: w["url"])
