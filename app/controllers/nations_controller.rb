@@ -22,6 +22,7 @@ class NationsController < ApplicationController
     @result = @nation.save
     if @result
       @nation.update
+      binding.pry
       @nation.save
       @nation.reload
     end

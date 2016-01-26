@@ -64,9 +64,10 @@ class Nation < ActiveRecord::Base
       webhooks = @client.call(:webhooks, :index)["results"]
       ids = []
       webhooks.each {|id| ids << id["id"]}
+      binding.pry
       webhooks.each do |w|
         next if self.webhooks.active.find_by(external_id: w["id"])
-        self.webhooks.create(event: w["event"], external_id: w["id"], link: w["url"])
+        self.webhooks.create(event: WEBHOOK_HASH.invert[w["event"]], external_id: w["id"], link: w["url"])
       end
       inactive_webhooks = self.webhooks.active.where.not(external_id:  ids)
       inactive_webhooks.each {|d| d.update_attributes(active: false) }
@@ -108,5 +109,17 @@ class Nation < ActiveRecord::Base
     result = @client.call(:webhooks, :create, webhook)
     @webhook.update_attributes(external_id: result["webhook"]["id"], link: result["webhook"]["url"])
   end
+
+  WEBHOOK_HASH = {
+    "When a person is created." => "person_created", 
+    "When a person is changed." => "person_changed", 
+    "When a person is contacted." => "person_contacted", 
+  "When a person is merged." => "person_merged",  
+  "When a person is destroyed." => "person_destroyed",
+  "When people are destroyed." => "people_destroyed",
+    "When a person successfully donates." => "donation_succeeded", 
+    "When a donation is changed." => "donation_changed", 
+    "When a donation is canceled." => "donation_canceled"
+  }
 
 end
