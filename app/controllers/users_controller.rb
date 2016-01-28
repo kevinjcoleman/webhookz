@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
-  	@nations = @user.nations.each {|d| d.save }
+  	all_nations
   end
 
   private
@@ -16,5 +16,13 @@ class UsersController < ApplicationController
           flash[:danger] = "You can't access that page.".html_safe
           redirect_to user_path(current_user)
         end
+    end
+
+    def all_nations
+      @nations = @user.nations.each do |n|
+        n.update_if_not_updated_recently
+        n.save
+        n.reload
+      end
     end
 end

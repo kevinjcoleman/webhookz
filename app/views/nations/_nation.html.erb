@@ -1,4 +1,4 @@
-<div class="panel panel-default <%= unitialized_api_style(nation) %>">
+<div id="nation-<%= nation.id %>" class="panel panel-default <%= unitialized_api_style(nation) %>">
 		    <div class="panel-body">
 		    	<strong class="text-left col-md-4"><%= nation.nation_slug %>   
 					<%= link_to edit_user_nation_path(@user, nation), id: "edit#{nation.id}", remote: true do %><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color: #00FF00;" id="edit-<%= nation.id %>"></span><% end %>
