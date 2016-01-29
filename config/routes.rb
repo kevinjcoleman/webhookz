@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'actions/new'
+
   get 'webhook/create'
 
   devise_for :users
@@ -11,6 +13,9 @@ Rails.application.routes.draw do
 
   get '/users/:user_id/webhooks/:id/close', to: 'webhook#cancel', as: "webhook_close"
 
+  resources :webhook do 
+    resources :actions
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
