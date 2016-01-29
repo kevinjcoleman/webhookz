@@ -13,7 +13,11 @@
 						  <ul class="dropdown-menu">
 						    <% if nation.webhooks.any? %>
 						    	<% nation.webhooks.active.each do |webhook| %>
-							    <li><a href="#"><%= webhook.normalized_event %></a></li>
+							    <li>
+							    	<%= link_to user_nation_webhook_path(@user, nation, webhook), id: "nation-show-webhook-#{webhook.id}", remote: true do %>
+							    	<%= webhook.normalized_event %>
+							    	<% end %>
+							    </li>
 							    <% end %>
 							    <li role="separator" class="divider"></li>
 							<% end %>
@@ -37,5 +41,9 @@
 		     		<h3 class="center no-margin">Create a webhook</h3>
 		     		<div class="embedded-nation-form" id="webhook-create-form-<%= nation.id %>">
 		     		</div>
+		     	</div>
+
+		     	<div class="panel-footer" id="nation-<%= nation.id %>-webhook-show" style="display:none;">
+					
 		     	</div>
 </div>

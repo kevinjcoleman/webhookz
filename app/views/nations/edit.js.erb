@@ -1,2 +1,5 @@
+$('#nation-<%= @nation.id %>-webhook-show').hide(350);
+$('#webhook-create-<%= @nation.id %>').hide(350);
 $('#embedded-nation-form-<%= @nation.id %>').html("<%= j (render 'edit_form') %>");
+$('#embedded-nation-form-<%= @nation.id %>').show();
 $('#nation-edit-form-<%= @nation.id %>').slideDown(350);

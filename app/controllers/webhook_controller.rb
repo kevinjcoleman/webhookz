@@ -26,6 +26,17 @@ class WebhookController < ApplicationController
       format.html { render nothing: true  }
     end
   end
+
+  def show
+    @user = User.find(params[:user_id])
+    @nation = Nation.find(params[:nation_id])
+    @webhook = Webhook.find(params[:id])
+
+    respond_to do |format|
+      format.js
+      format.html { render nothing: true  }
+    end
+  end
   	private
 	
 		def webhook_params

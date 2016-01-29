@@ -1,0 +1,4 @@
+$('#webhook-create-<%= @nation.id %>').hide(350);
+$('#nation-edit-form-<%= @nation.id %>').hide(350);
+$('#nation-<%= @nation.id %>-webhook-show').html("<%= j (render 'webhook') %>");
+$('#nation-<%= @nation.id %>-webhook-show').slideDown(350);
