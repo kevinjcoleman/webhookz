@@ -12,9 +12,9 @@ class Webhook < ActiveRecord::Base
   	"When a person is created." => "person_created", 
   	"When a person is changed." => "person_changed", 
   	"When a person is contacted." => "person_contacted", 
-	"When a person is merged." => "person_merged",	
-	"When a person is destroyed." => "person_destroyed",
-	"When people are destroyed." => "people_destroyed",
+  	"When a person is merged." => "person_merged",	
+  	"When a person is destroyed." => "person_destroyed",
+  	"When people are destroyed." => "people_destroyed",
   	"When a person successfully donates." => "donation_succeeded", 
   	"When a donation is changed." => "donation_changed", 
   	"When a donation is canceled." => "donation_canceled"
@@ -27,7 +27,5 @@ class Webhook < ActiveRecord::Base
   def normalized_event
   	return WEBHOOK_HASH.invert[self.event]
   end
-
-
 
 end

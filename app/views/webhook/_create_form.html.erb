@@ -2,7 +2,13 @@
 	<%= f.simple_fields_for @nation do |n| %>
 		<%= f.simple_fields_for @webhook do |e| %>
 		  <%= e.input :event, collection: ["When a person is created.", "When a person is changed.", "When a person is contacted.", "When a person is destroyed.",  "When a person is merged.",	"When people are destroyed.", "When a person successfully donates.", "When a donation is changed.", "When a donation is canceled."] %>
-		 <%= n.button :submit, "Create webhook", class: "btn btn-success", remote: true %>
-		 <% end %>	
+		<div class="row">
+			<div class="col-md-4">
+			</div>
+			<%= n.button :submit, "Create webhook", class: "btn btn-success center col-md-4", remote: true %>
+			<div class="col-md-4">
+			</div>
+		</div>
+		<% end %>	
   <% end %>
 <% end %>

@@ -1,1 +1,17 @@
-<h4 class="center"><%= @webhook.normalized_event %></h2>
+<div class="row">
+	<div class="col-md-4">
+	</div>
+	<div class="col-md-4">
+	<h4 class="center">
+		<%= @webhook.normalized_event %>		    		
+		<%= link_to user_nation_webhook_path(@user, @nation, @webhook), id: "delete#{@webhook.id}", remote: true, method: :delete,  data: { confirm: 'Are you sure?' } do %>
+			<span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: red;"></span>
+			<% end %>
+	</h4>
+	</div>
+	<div class="col-md-4">
+		<%= link_to webhook_close_path(@user, @nation), remote: true do %>
+			<span class="pull-right"><em>Close webhook</em></span>
+		<% end %>
+	</div>
+</div>

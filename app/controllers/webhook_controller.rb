@@ -9,10 +9,10 @@ class WebhookController < ApplicationController
   		if @result
 	      format.js { flash.now[:notice] = "#{@nation.nation_slug}'s <strong>#{@webhook.normalized_event}</strong> webhook was created!" }
 	      format.html { render nothing: true  }
-	 	else
+	 	 else
 		      format.js { flash.now[:danger] = "Something went wrong when creating a <em>#{@webhook.normalized_event}</em> webhook for <strong>#{@nation.nation_slug}</strong>!" }
 		      format.html { render nothing: true  }
-	 	end
+	 	 end
     end
   end
 
@@ -37,6 +37,35 @@ class WebhookController < ApplicationController
       format.html { render nothing: true  }
     end
   end
+
+  def destroy
+    @user = User.find(params[:user_id])
+    @nation = Nation.find(params[:nation_id])
+    @webhook = Webhook.find(params[:id])
+
+    @result = @nation.destroy_webhook(@webhook)
+    @nations = @user.nations
+    respond_to do |format|
+      if @result
+        format.js { flash.now[:notice] = "#{@nation.nation_slug}'s <strong>#{@webhook.normalized_event}</strong> webhook was destroyed!" }
+        format.html { render nothing: true  }
+     else
+        format.js { flash.now[:danger] = "Something went wrong when destroying <em>#{@webhook.normalized_event}</em> webhook for <strong>#{@nation.nation_slug}</strong>!" }
+        format.html { render nothing: true  }
+     end
+    end
+  end
+
+  def cancel
+    @user = User.find(params[:user_id])
+    @nation = Nation.find(params[:id])
+
+    respond_to do |format|
+      format.js
+      format.html { render nothing: true  }
+    end
+  end
+
   	private
 	
 		def webhook_params
