@@ -13,6 +13,10 @@ class TrelloWebhooksController < ApplicationController
   	redirect_to root_path
   end
 
+  def freeimport_landing
+
+  end
+
    def json_request?
     request.format.json?
   end
