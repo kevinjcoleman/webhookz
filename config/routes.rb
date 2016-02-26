@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   post 'trello_webhooks/freeimport_response', to: 'trello_webhooks#freeimport_response'
-   post 'trello_webhooks/freeimport_response', to: 'trello_webhooks#freeimport_landing'
+  get 'trello_webhooks/freeimport_response', to: 'trello_webhooks#freeimport_landing'
 
   get 'actions/new'
 

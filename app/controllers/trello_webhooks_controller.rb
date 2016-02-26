@@ -14,7 +14,7 @@ class TrelloWebhooksController < ApplicationController
   end
 
   def freeimport_landing
-
+  	
   end
 
    def json_request?
