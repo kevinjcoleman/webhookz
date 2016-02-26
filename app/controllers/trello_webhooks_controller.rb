@@ -1,5 +1,5 @@
 class TrelloWebhooksController < ApplicationController
-  skip_before_action :verify_authenticity_token, if: :json_request?
+  skip_before_action :verify_authenticity_token
 
   def freeimport_response
   	trello_webhook = params[:trello_webhook]
@@ -14,7 +14,7 @@ class TrelloWebhooksController < ApplicationController
   end
 
   def freeimport_landing
-  	
+
   end
 
    def json_request?
