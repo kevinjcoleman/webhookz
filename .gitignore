@@ -17,3 +17,6 @@
 /tmp
 /config/initializers/encryption_hash.rb
 /config/initializers/api_initializer_key.rb
+
+# Ignore application configuration
+/config/application.yml

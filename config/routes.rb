@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post 'trello_webhooks/freeimport_response', to: 'trello_webhooks#freeimport_response'
+
   get 'actions/new'
 
   get 'webhook/create'

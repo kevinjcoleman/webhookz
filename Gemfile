@@ -15,6 +15,7 @@ gem 'bootstrap-sass'
 gem 'pry'
 gem 'simple_form'
 gem 'selenium-webdriver'
+gem "figaro"
 
 
 group :development, :test do

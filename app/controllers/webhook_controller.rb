@@ -47,7 +47,7 @@ class WebhookController < ApplicationController
     @nations = @user.nations
     respond_to do |format|
       if @result
-        format.js { flash.now[:notice] = "#{@nation.nation_slug}'s <strong>#{@webhook.normalized_event}</strong> webhook was destroyed!" }
+        format.js { flash.now[:notice] = "<strong>#{@nation.nation_slug.capitalize}'s</strong> <em>'#{@webhook.normalized_event}'</em> webhook was destroyed!" }
         format.html { render nothing: true  }
      else
         format.js { flash.now[:danger] = "Something went wrong when destroying <em>#{@webhook.normalized_event}</em> webhook for <strong>#{@nation.nation_slug}</strong>!" }
